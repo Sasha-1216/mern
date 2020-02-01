@@ -1,0 +1,27 @@
+{
+  "name": "assignment1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon -w server server/server.js",
+    "watch": "babel public/src --out-dir public --watch --verbose",
+    "compile": "babel public/src --out-dir public",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^4.4.1",
+    "express": "^4.17.1",
+    "milsymbol": "^2.0.0",
+    "nodemon": "^1.19.4",
+    "react-bootstrap": "^1.0.0-beta.16"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-react": "^7.8.3"
+  }
+}

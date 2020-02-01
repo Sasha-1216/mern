@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
+body {
+  text-align: center;
+  background: #fceeb5;
+  font-family: Poppins, Arial, Verdana, sans-serif;
+}
+
+.container {
+  width: 400px;
+  height: 680px;
+  box-sizing: border-box;
+  box-shadow: 0 8px 16px -8px rgba(26, 25, 25, 0.4);
+  border-radius: 35px;
+  margin: auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-image: linear-gradient(to top, #accbee 0%, #e7f0fd 100%);
+  overflow: hidden;
+}
+
+#selfie {
+  border-radius: 50%;
+  margin: 35px auto;
+  display: block;
+  width: 150px;
+  height: 150px;
+  border: 3px solid #e6a584;
+  box-shadow: 0 8px 16px -8px rgba(26, 25, 25, 0.4);
+}
+
+h2,
+#selfie,
+p {
+  position: relative;
+  z-index: 2;
+  color: #634e55;
+  font-weight: bold;
+}
+
+p {
+  font-size: 12px;
+  text-align: left;
+  padding: 20px;
+  line-height: 20px;
+}
+button {
+  background: #fff;
+  padding: 13px 20px;
+  border-radius: 25px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #e6a584;
+  margin: 10px auto;
+  box-shadow: 0 8px 16px -8px rgba(26, 25, 25, 0.4);
+  border: 1px solid #fff;
+}
+
+button:hover {
+  background: #e6a584;
+  color: #fff;
+  border: 1px solid #e6a584;
+}
+
+.wave {
+  width: 1000px;
+  height: 825px;
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  margin-left: -500px;
+  margin-top: -500px;
+  border-radius: 35%;
+  background: rgba(255, 255, 255, 0.75);
+  animation: wave 15s infinite linear;
+}
+
+@keyframes wave {
+  from {
+    transform: rotate(0deg);
+  }
+  from {
+    transform: rotate(240deg);
+  }
+}
