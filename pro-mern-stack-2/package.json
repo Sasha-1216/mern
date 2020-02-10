@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon -w server server/server.js",
-    "watch": "babel src --presets @babel/react --out-dir public --watch --verbose",
-    "compile": "babel src --presets @babel/react --out-dir public",
+    "compile": "babel public/src --out-dir public",
+    "watch": "babel public/src --out-dir public --watch --verbose",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
