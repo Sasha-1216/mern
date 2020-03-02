@@ -6,8 +6,8 @@ function ProductRow(props) {
   return (
     <tr>
       <td> {product.id} </td>
-      <td> {product.productName} </td>
-      <td> ${product.price} </td>
+      <td> {product.name} </td>
+      <td> ${product.price.toFixed(2)} </td>
       <td> {product.category} </td>
       <td>
         {' '}
@@ -41,7 +41,7 @@ class AddProduct extends React.Component {
     const form = document.forms.productAdd;
     const product = {
       category: form.category.value,
-      productName: form.productName.value,
+      name: form.name.value,
       price: form.price.value,
       image: form.image.value
     };
@@ -50,7 +50,7 @@ class AddProduct extends React.Component {
 
     // clear the user input after submit
     form.category.value = '';
-    form.productName.value = '';
+    form.name.value = '';
     form.price.value = '';
     form.image.value = '';
   }
@@ -75,11 +75,7 @@ class AddProduct extends React.Component {
         </fieldset>
         <fieldset>
           <label>Product Name</label>
-          <input
-            type='text'
-            name='productName'
-            placeholder='Product Name'
-          ></input>
+          <input type='text' name='name' placeholder='Product Name'></input>
         </fieldset>
         <fieldset>
           <label htmlFor='image'>Image URL</label>
@@ -128,10 +124,9 @@ class ProductList extends React.Component {
   }
 
   async loadData() {
-
     const query = `query {
       productList {
-        id name price category image 
+        id name price category image
       }
     }`;
 
@@ -146,11 +141,23 @@ class ProductList extends React.Component {
   }
 
   createProduct(product) {
-    product.id = this.state.productsArray.length + 1;
-    // product.created = new Date();
-    const newProductsList = this.state.productsArray.slice();
-    newProductsList.push(product);
-    this.setState({ productsArray: newProductsList });
+    this.mutateData(product);
+  }
+
+  async mutateData(product) {
+    const query = `mutation addProduct($product: ProductInput!) {
+      addProduct(product: $product) {
+          id name price category image
+        }
+      }`;
+
+    const response = await fetch('/graphql', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query, variables: { product } })
+    });
+
+    this.loadData();
   }
 
   render() {

@@ -25,7 +25,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 // const initialProduct = [];
 function ProductRow(props) {
   var product = props.product;
-  return React.createElement("tr", null, React.createElement("td", null, " ", product.id, " "), React.createElement("td", null, " ", product.productName, " "), React.createElement("td", null, " $", product.price, " "), React.createElement("td", null, " ", product.category, " "), React.createElement("td", null, ' ', React.createElement("a", {
+  return React.createElement("tr", null, React.createElement("td", null, " ", product.id, " "), React.createElement("td", null, " ", product.name, " "), React.createElement("td", null, " $", product.price.toFixed(2), " "), React.createElement("td", null, " ", product.category, " "), React.createElement("td", null, ' ', React.createElement("a", {
     href: product.image
   }, "View")));
 }
@@ -94,14 +94,14 @@ function (_React$Component3) {
       var form = document.forms.productAdd;
       var product = {
         category: form.category.value,
-        productName: form.productName.value,
+        name: form.name.value,
         price: form.price.value,
         image: form.image.value
       };
       this.props.createProduct(product); // clear the user input after submit
 
       form.category.value = '';
-      form.productName.value = '';
+      form.name.value = '';
       form.price.value = '';
       form.image.value = '';
     }
@@ -121,7 +121,7 @@ function (_React$Component3) {
         placeholder: "$"
       })), React.createElement("fieldset", null, React.createElement("label", null, "Product Name"), React.createElement("input", {
         type: "text",
-        name: "productName",
+        name: "name",
         placeholder: "Product Name"
       })), React.createElement("fieldset", null, React.createElement("label", {
         htmlFor: "image"
@@ -199,7 +199,7 @@ function (_React$Component5) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                query = "query {\n      productList {\n        id name price category image \n      }\n    }";
+                query = "query {\n      productList {\n        id name price category image\n      }\n    }";
                 _context.next = 3;
                 return fetch('/graphql', {
                   method: 'POST',
@@ -239,14 +239,52 @@ function (_React$Component5) {
   }, {
     key: "createProduct",
     value: function createProduct(product) {
-      product.id = this.state.productsArray.length + 1; // product.created = new Date();
-
-      var newProductsList = this.state.productsArray.slice();
-      newProductsList.push(product);
-      this.setState({
-        productsArray: newProductsList
-      });
+      this.mutateData(product);
     }
+  }, {
+    key: "mutateData",
+    value: function () {
+      var _mutateData = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2(product) {
+        var query, response;
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                query = "mutation addProduct($product: ProductInput!) {\n      addProduct(product: $product) {\n          id name price category image\n        }\n      }";
+                _context2.next = 3;
+                return fetch('/graphql', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                    query: query,
+                    variables: {
+                      product: product
+                    }
+                  })
+                });
+
+              case 3:
+                response = _context2.sent;
+                this.loadData();
+
+              case 5:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function mutateData(_x) {
+        return _mutateData.apply(this, arguments);
+      }
+
+      return mutateData;
+    }()
   }, {
     key: "render",
     value: function render() {

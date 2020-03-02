@@ -6,15 +6,20 @@ type Product {
   image: String!
 }
 
+input ProductInput {
+  name: String!
+  price: Float!
+  category: Category!
+  image: String!
+}
+
 type Query {
   product: String!
   productList: [Product!]!
 }
-  
 
 type Mutation {
-  addProduct(product: ProductInput!): Product!
-  
+  addProduct(product: ProductInput!): [Product!]!
 }
 
 enum Category {
@@ -23,12 +28,4 @@ enum Category {
   Jackets
   Sweaters
   Accessories
-}
-
-input ProductInput {
-  id: Int!
-  name: String!
-  price: Float!
-  category: Category!
-  image: String!
 }
