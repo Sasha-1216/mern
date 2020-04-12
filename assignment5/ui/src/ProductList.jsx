@@ -1,6 +1,8 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 import ProductTable from './ProductTable.jsx';
 import ProductAdd from './ProductAdd.jsx';
+import ProductFilter from './ProductFilter.jsx';
 import URLSearchParams from 'url-search-params';
 import graphQLFetch from './graphQLFetch.js';
 
@@ -37,29 +39,20 @@ export default class ProductList extends React.Component {
 
     const query = `query productList($status: StatusType) {
         productList (status: $status) {
-          id name price category image
+          id status name price category image
         }
       }`;
 
-    const data = await graphQLFetch(query);
+    const data = await graphQLFetch(query, vars);
     if (data) {
       this.setState({ productsArray: data.productList });
     }
   }
-    // const response = await fetch(window.ENV.UI_API_ENDPOINT, {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({ query }),
-    // });
-
-    // const result = await response.json();
-    // this.setState({ productsArray: result.data.productList });
-  
 
   async createProduct(product) {
     const query = `mutation addProduct($product: ProductInput!) {
         addProduct(product: $product) {
-            id name price category image
+            id status name price category image
           }
         }`;
 
@@ -67,27 +60,25 @@ export default class ProductList extends React.Component {
     if (data) {
       this.loadData();
     }
-
-    // const newProduct = product;
-    // newProduct.price = parseFloat(product.price);
-    // this.mutateData(newProduct);
   }
-
-//   async mutateData(product) {}
 
   render() {
     const TableDescription = () => <p>Showing all available products.</p>;
     const AddProductDescription = () => <p>Add a new product to inventory.</p>;
     const { productsArray } = this.state;
+    const { match } = this.props;
     return (
       <React.Fragment>
         <h1>My Company Inventory</h1>
         <TableDescription />
+        <ProductFilter />
         <hr />
         <ProductTable productsArray={productsArray} />
         <AddProductDescription />
         <hr />
         <ProductAdd createProduct={this.createProduct} />
+        <hr />
+        <Route path={`${match.path}/:id`} />
       </React.Fragment>
     );
   }

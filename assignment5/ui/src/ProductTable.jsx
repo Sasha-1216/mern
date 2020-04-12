@@ -1,9 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 function ProductRow({ product }) {
   return (
     <tr>
       <td>{product.id}</td>
+      <td>{product.status}</td>
       <td>{product.name}</td>
       <td>${product.price.toFixed(2)}</td>
       <td>{product.category}</td>
@@ -11,7 +13,7 @@ function ProductRow({ product }) {
         <a href={product.image}>View</a>
       </td>
       <td>
-        <a href={`/#/edit/${product.id}`}>Edit</a>
+        <Link to={`/edit/${product.id}`}>Edit</Link>
       </td>
     </tr>
   );
@@ -27,6 +29,7 @@ export default function ProductTable({ productsArray }) {
       <thead>
         <tr>
           <th> Index </th>
+          <th> Status </th>
           <th> Product Name </th>
           <th> Price </th>
           <th> Category </th>

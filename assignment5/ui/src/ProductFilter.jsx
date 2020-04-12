@@ -1,17 +1,81 @@
-/* eslint "react/prefer-stateless-function": "off" */
-
 import React from 'react';
+import URLSearchParams from 'url-search-params';
+import { withRouter } from 'react-router-dom';
 
-export default class ProductFilter extends React.Component {
-    render(){
-        return (
-            <div>
-                <a href="/#/product"> All Products</a>
-                {' | '}
-                <a href="/#/proudcts?status=New"> New Products</a>
-                {' | '}
-                <a href="/#/products?status=Assigned">Assigned Products</a>
-            </div>
-        );
+class ProductFilter extends React.Component {
+  constructor({ location: { search } }) {
+    super();
+    const params = new URLSearchParams(search);
+    this.state = {
+      status: params.get('status') || '',
+      changed: false,
+    };
+
+    this.onChangeStatus = this.onChangeStatus.bind(this);
+    this.applyFilter = this.applyFilter.bind(this);
+    this.showOriginalFilter = this.showOriginalFilter.bind(this);
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      location: { search: prevSearch },
+    } = prevProps;
+    const {
+      location: { search },
+    } = this.props;
+    if (prevSearch !== search) {
+      this.showOriginalFilter();
     }
+  }
+
+  onChangeStatus(e) {
+    this.setState({ status: e.target.value, changed: true });
+  }
+
+  showOriginalFilter() {
+    const {
+      location: { search },
+    } = this.props;
+    const params = new URLSearchParams(search);
+    this.setState({
+      status: params.get('status') || '',
+      changed: false,
+    });
+  }
+
+  applyFilter() {
+    const { status } = this.state;
+    const { history } = this.props;
+    history.push({
+      pathname: '/product',
+      search: status ? `?status=${status}` : '',
+    });
+  }
+
+  render() {
+    const { status, changed } = this.state;
+    return (
+      <div className='product-filter'>
+        Status:{' '}
+        <select value={status} onChange={this.onChangeStatus}>
+          <option value=''>All</option>
+          <option value='New'>New Product</option>
+          <option value='OnSale'>On Sale</option>
+          <option value='OutOfStock'>Out of Stock</option>
+        </select>{' '}
+        <button type='button' onClick={this.applyFilter}>
+          Apply
+        </button>{' '}
+        <button
+          type='button'
+          onClick={this.showOriginalFilter}
+          disabled={!changed}
+        >
+          Reset
+        </button>
+      </div>
+    );
+  }
 }
+
+export default withRouter(ProductFilter);

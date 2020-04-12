@@ -5,6 +5,7 @@ type Product {
   price: Float!
   category: Category!
   image: String!
+  status: StatusType!
 }
 
 enum StatusType {
@@ -18,6 +19,7 @@ input ProductInput {
   price: Float!
   category: Category!
   image: String!
+  status: StatusType!
 }
 
 type Query {
