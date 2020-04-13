@@ -67,17 +67,8 @@ export default class ProductList extends React.Component {
     const query = `mutation deleteProduct($id: Int!) {
       productDelete(id: $id)
     }`;
-    console.log('In deleteProduct. this.state:');
-    console.log(this.state);
     const { productsArray } = this.state;
-    // const {
-    //   location: { pathname, search },
-    //   history,
-    // } = this.props;
-    console.log("index: " + index);
-    const deleted = productsArray[index];
-    console.log("deleted:");
-    console.log(deleted);
+
     const { id } = productsArray[index];
     const data = await graphQLFetch(query, { id });
     if (data && data.deleteProduct) {

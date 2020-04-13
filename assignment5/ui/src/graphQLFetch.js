@@ -1,6 +1,5 @@
 export default async function graphQLFetch(query, variables = {}) {
   try {
-    console.log("Running query:" + query);
     const response = await fetch(window.ENV.UI_API_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -9,7 +8,6 @@ export default async function graphQLFetch(query, variables = {}) {
 
     const body = await response.text();
     const result = JSON.parse(body);
-    console.log('Response: ' + body);
 
     if (result.errors) {
       const error = result.errors[0];

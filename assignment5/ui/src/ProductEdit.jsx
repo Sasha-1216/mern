@@ -26,8 +26,6 @@ export default class ProductEdit extends React.Component {
   async handleSubmit(e) {
     e.preventDefault();
     const { product } = this.state;
-    console.log(product); // eslint-disable-line no-console
-    console.log(this.state);
     const query = `mutation productUpdate(
         $id: Int!
         $changes: ProductUpdateInputs!
@@ -62,8 +60,6 @@ export default class ProductEdit extends React.Component {
     } = this.props;
 
     const data = await graphQLFetch(query, { id: parseInt(id) });
-    console.log('query: ' + query);
-    console.log('data: ' + data);
     this.setState({ product: data ? data.product : {} });
   }
 
