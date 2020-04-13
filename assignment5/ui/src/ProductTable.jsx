@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink, withRouter } from 'react-router-dom';
 
-function ProductRow({ product }) {
+const ProductRow = withRouter(({ product, deleteProduct, index }) => {
   return (
     <tr>
       <td>{product.id}</td>
@@ -13,15 +13,31 @@ function ProductRow({ product }) {
         <a href={product.image}>View</a>
       </td>
       <td>
-        <Link to={`/edit/${product.id}`}>Edit</Link>
+        <Link to={`/edit/${product.id}`}>
+          {' '}
+          <button>Edit</button>{' '}
+        </Link>
+        <button
+          onClick={() => {
+            deleteProduct(index);
+          }}
+        >
+          {' '}
+          Delete{' '}
+        </button>
       </td>
     </tr>
   );
-}
+});
 
-export default function ProductTable({ productsArray }) {
-  const productRows = productsArray.map((product) => (
-    <ProductRow key={product.id} product={product} />
+export default function ProductTable({ productsArray, deleteProduct }) {
+  const productRows = productsArray.map((product, index) => (
+    <ProductRow
+      key={product.id}
+      product={product}
+      deleteProduct={deleteProduct}
+      index={index}
+    />
   ));
 
   return (

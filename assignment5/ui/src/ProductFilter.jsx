@@ -16,17 +16,7 @@ class ProductFilter extends React.Component {
     this.showOriginalFilter = this.showOriginalFilter.bind(this);
   }
 
-  componentDidUpdate(prevProps) {
-    const {
-      location: { search: prevSearch },
-    } = prevProps;
-    const {
-      location: { search },
-    } = this.props;
-    if (prevSearch !== search) {
-      this.showOriginalFilter();
-    }
-  }
+
 
   onChangeStatus(e) {
     this.setState({ status: e.target.value, changed: true });

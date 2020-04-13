@@ -11,6 +11,7 @@ export default class ProductList extends React.Component {
     super();
     this.state = { productsArray: [] };
     this.createProduct = this.createProduct.bind(this);
+    this.deleteProduct = this.deleteProduct.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -62,6 +63,37 @@ export default class ProductList extends React.Component {
     }
   }
 
+  async deleteProduct(index) {
+    const query = `mutation deleteProduct($id: Int!) {
+      productDelete(id: $id)
+    }`;
+    console.log('In deleteProduct. this.state:');
+    console.log(this.state);
+    const { productsArray } = this.state;
+    // const {
+    //   location: { pathname, search },
+    //   history,
+    // } = this.props;
+    console.log("index: " + index);
+    const deleted = productsArray[index];
+    console.log("deleted:");
+    console.log(deleted);
+    const { id } = productsArray[index];
+    const data = await graphQLFetch(query, { id });
+    if (data && data.deleteProduct) {
+      this.setState((prevState) => {
+        const newList = [...prevState.product];
+        if (pathname === `/product/${id}`) {
+          history.push({ pathname: '/product', search });
+        }
+        newList.splice(index, 1);
+        return { productsArray: newList };
+      });
+    } else {
+      this.loadData();
+    }
+  }
+
   render() {
     const TableDescription = () => <p>Showing all available products.</p>;
     const AddProductDescription = () => <p>Add a new product to inventory.</p>;
@@ -73,7 +105,10 @@ export default class ProductList extends React.Component {
         <TableDescription />
         <ProductFilter />
         <hr />
-        <ProductTable productsArray={productsArray} />
+        <ProductTable
+          productsArray={productsArray}
+          deleteProduct={this.deleteProduct}
+        />
         <AddProductDescription />
         <hr />
         <ProductAdd createProduct={this.createProduct} />

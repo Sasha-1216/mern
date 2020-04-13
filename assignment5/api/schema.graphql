@@ -22,13 +22,23 @@ input ProductInput {
   status: StatusType!
 }
 
+input ProductUpdateInputs {
+  name: String!
+  price: Float!
+  category: Category!
+  image: String!
+  status: StatusType!
+}
+
 type Query {
-  product: String!
+  product(id: Int!): Product!
   productList(status: StatusType): [Product!]!
 }
 
 type Mutation {
   addProduct(product: ProductInput!): [Product!]!
+  productUpdate(id: Int!, changes: ProductUpdateInputs!): Product!
+  productDelete(id: Int!): Boolean!
 }
 
 enum Category {
