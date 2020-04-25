@@ -1,0 +1,50 @@
+type Product {
+  _id: ID!
+  id: Int!
+  name: String!
+  price: Float!
+  category: Category!
+  image: String!
+  status: StatusType!
+}
+
+enum StatusType {
+  New
+  OnSale
+  OutOfStock
+}
+
+input ProductInput {
+  name: String!
+  price: Float!
+  category: Category!
+  image: String!
+  status: StatusType!
+}
+
+input ProductUpdateInputs {
+  name: String!
+  price: Float!
+  category: Category!
+  image: String!
+  status: StatusType!
+}
+
+type Query {
+  product(id: Int!): Product!
+  productList(status: StatusType): [Product!]!
+}
+
+type Mutation {
+  addProduct(product: ProductInput!): [Product!]!
+  productUpdate(id: Int!, changes: ProductUpdateInputs!): Product!
+  productDelete(id: Int!): Boolean!
+}
+
+enum Category {
+  Shirts
+  Jeans
+  Jackets
+  Sweaters
+  Accessories
+}
