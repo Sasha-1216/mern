@@ -121,9 +121,10 @@ export default class ProductEdit extends React.Component {
 
           <Col xs={6} sm={4} md={3} lg={3}>
             <FormGroup>
-              <ControlLabel htmlFor='Price'>Price Per Unit: </ControlLabel>
+              <ControlLabel htmlFor='Price'>* Price Per Unit: </ControlLabel>
               <FormControl
-                type='NumInput'
+                required
+                componentClass={NumInput}
                 value={price}
                 onChange={this.onChange}
                 name='price'
@@ -135,9 +136,10 @@ export default class ProductEdit extends React.Component {
 
           <Col xs={6} sm={4} md={3} lg={3}>
             <FormGroup>
-              <ControlLabel htmlFor='productName'>Product Name: </ControlLabel>
+              <ControlLabel htmlFor='productName'>* Product Name: </ControlLabel>
               <FormControl
-                type='TextInput'
+                required
+                componentClass={TextInput}
                 value={name}
                 onChange={this.onChange}
                 name='name'
@@ -165,7 +167,7 @@ export default class ProductEdit extends React.Component {
 
           <Col xs={6} sm={4} md={3} lg={3}>
             <FormGroup>
-              <ControlLabel htmlFor='Status'>Category: </ControlLabel>
+              <ControlLabel htmlFor='Status'>Status: </ControlLabel>
               <FormControl
                 componentClass='select'
                 value={status}

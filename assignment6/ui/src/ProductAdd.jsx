@@ -9,6 +9,8 @@ import {
   Row,
   Col,
 } from 'react-bootstrap';
+import NumInput from './NumInput.jsx';
+import TextInput from './TextInput.jsx';
 
 export default class ProductAdd extends React.Component {
   constructor() {
@@ -63,9 +65,10 @@ export default class ProductAdd extends React.Component {
 
           <Col xs={6} sm={4} md={3} lg={3}>
             <FormGroup>
-              <ControlLabel htmlFor='Price'>Price Per Unit: </ControlLabel>
+              <ControlLabel htmlFor='Price'> * Price Per Unit: </ControlLabel>
               <FormControl
-                componentClass='input'
+                required
+                componentClass={NumInput}
                 name='price'
                 placeholder='$'
               ></FormControl>
@@ -74,9 +77,10 @@ export default class ProductAdd extends React.Component {
 
           <Col xs={6} sm={4} md={3} lg={3}>
             <FormGroup>
-              <ControlLabel htmlFor='productName'>Product Name: </ControlLabel>
+              <ControlLabel htmlFor='productName'>* Product Name: </ControlLabel>
               <FormControl
-                componentClass='input'
+                required
+                componentClass={TextInput}
                 name='name'
                 placeholder='Product Name'
               ></FormControl>
@@ -98,7 +102,7 @@ export default class ProductAdd extends React.Component {
 
           <Col xs={6} sm={4} md={3} lg={3}>
             <FormGroup>
-              <ControlLabel htmlFor='Status'>Category: </ControlLabel>
+              <ControlLabel htmlFor='Status'>Status: </ControlLabel>
               <FormControl
                 componentClass='select'
                 name='status'
@@ -115,7 +119,9 @@ export default class ProductAdd extends React.Component {
             <FormGroup>
               <ControlLabel>&nbsp;</ControlLabel>
               <ButtonToolbar>
-                <Button type='submit' bsStyle="primary">Add Product</Button>
+                <Button type='submit' bsStyle='primary'>
+                  Add Product
+                </Button>
               </ButtonToolbar>
             </FormGroup>
           </Col>
