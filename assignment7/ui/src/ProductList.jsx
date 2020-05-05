@@ -39,16 +39,24 @@ export default class ProductList extends React.Component {
     const vars = {};
     if (params.get('status')) vars.status = params.get('status');
 
-    const query = `query productList($status: StatusType) {
+    const productListQuery = `query productList($status: StatusType) {
         productList (status: $status) {
           id status name price category image
         }
       }`;
 
-    const data = await graphQLFetch(query, vars);
-    if (data) {
-      this.setState({ productsArray: data.productList });
+    const productListData = await graphQLFetch(productListQuery, vars);
+    if (productListData) {
+      this.setState({ productsArray: productListData.productList });
     }
+
+    const countQuery = `query { counts }`;
+    const countData = await graphQLFetch(countQuery);
+    if(countData) {
+      this.setState({counts : countData.counts});
+    }
+    
+
   }
 
   async createProduct(product) {
