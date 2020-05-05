@@ -10,7 +10,7 @@ import graphQLFetch from './graphQLFetch.js';
 export default class ProductList extends React.Component {
   constructor() {
     super();
-    this.state = { productsArray: [], counts : 0 };
+    this.state = { productsArray: [], counts: 0 };
     this.createProduct = this.createProduct.bind(this);
     this.deleteProduct = this.deleteProduct.bind(this);
   }
@@ -52,11 +52,9 @@ export default class ProductList extends React.Component {
 
     const countQuery = `query { counts }`;
     const countData = await graphQLFetch(countQuery);
-    if(countData) {
-      this.setState({counts : countData.counts});
+    if (countData) {
+      this.setState({ counts: countData.counts });
     }
-    
-
   }
 
   async createProduct(product) {
@@ -94,24 +92,8 @@ export default class ProductList extends React.Component {
     }
   }
 
-  async countProuct(_) {
-    const { counts } = this.state;
-    counts = 3
-    return counts;
-  //   // const { counts } = this.state;
-  //   const query = `query {
-  //     counts
-  //   }`;
-
-  //  const data = await graphQLFetch( query, { counts });
-  //  console.log("data" + data);
-  //  return data;
-  }
-
-
-
   render() {
-    const {counts} = this.state;
+    const { counts } = this.state;
     const TableDescription = () => <p> Showing {counts} available products.</p>;
     const AddProductDescription = () => <p>Add a new product to inventory.</p>;
     const { productsArray } = this.state;
